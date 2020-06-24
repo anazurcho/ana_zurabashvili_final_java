@@ -4,6 +4,7 @@ import ana.zurabashvili.taskmanager.DTO.task.*;
 import ana.zurabashvili.taskmanager.model.Task;
 import ana.zurabashvili.taskmanager.repository.TaskRepository;
 import ana.zurabashvili.taskmanager.service.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import java.util.List;
 @Service
 public class TaskServiceImpl implements TaskService {
 
-    final private TaskRepository taskRepository;
+    @Autowired
+    TaskRepository taskRepository;
 
     public TaskServiceImpl(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
@@ -22,7 +24,6 @@ public class TaskServiceImpl implements TaskService {
         List<TaskDTO> tasks = new ArrayList<>();
 
         for (Task task : taskRepository.findAll()) {
-
             tasks.add(TaskDTO.builder()
                     .id(task.getId())
                     .title(task.getTitle())
@@ -31,7 +32,6 @@ public class TaskServiceImpl implements TaskService {
                     .endDate(task.getEndDate())
                     .build());
         }
-
         return GetTasksOutput.builder().tasks(tasks).build();
     }
 
@@ -46,14 +46,14 @@ public class TaskServiceImpl implements TaskService {
 
         taskRepository.save(task);
 
-        return AddTaskOutput.builder().msg("Task added").build();
+        return AddTaskOutput.builder().msg("დაემატა").build();
     }
 
     @Override
     public DeleteTaskOutput deleteTask(DeleteTaskInput deleteTaskInput) {
         taskRepository.deleteById(deleteTaskInput.getId());
 
-        return DeleteTaskOutput.builder().msg("Task deleted").build();
+        return DeleteTaskOutput.builder().msg("წაიშალა").build();
     }
     List<Task> tasks = new ArrayList<>();
 

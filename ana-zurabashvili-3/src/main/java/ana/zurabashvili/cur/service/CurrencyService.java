@@ -51,5 +51,4 @@ public class CurrencyService {
 
         return dates;
     }
-
 }
